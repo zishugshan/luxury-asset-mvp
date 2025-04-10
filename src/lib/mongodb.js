@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
-const uri = "mongodb+srv://luxury-asset-mvp:luxury-asset-mvp@dev-qz.lohgxhs.mongodb.net/?retryWrites=true&w=majority&appName=dev-qz"; 
-const client = new MongoClient(uri);
+const MONGODB_URI = "mongodb+srv://luxury-asset-mvp:luxury-asset-mvp@dev-qz.lohgxhs.mongodb.net/?retryWrites=true&w=majority&appName=dev-qz"; 
+const client = new MongoClient(MONGODB_URI);
 let cachedDb = null;
 
 export async function connectToDatabase() {
