@@ -1,0 +1,29 @@
+import { connectToDatabase } from "../../lib/mongodb";
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+
+  const { event, data } = req.body;
+  if (event !== "asset_update") {
+    return res.status(400).json({ message: "Invalid event" });
+  }
+
+  const assetData = JSON.parse(data);
+
+  console.log("Received:", assetData);
+
+  try {
+    const db = await connectToDatabase();
+    await db.collection("assets").updateOne(
+      { assetId: assetData.asset },
+      { $set: { fuel: assetData.fuel, status: assetData.status, updatedAt: new Date() } },
+      { upsert: true }
+    );
+    res.status(200).json({ message: "Asset updated" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
