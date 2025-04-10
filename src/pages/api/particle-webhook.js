@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   console.log("Raw body:", req.body);
 
-  const { event, data } = req.body;
+  let { event, data } = req.body;
 
   if (event !== "asset_update") {
     console.warn("Invalid event type:", event);
@@ -39,6 +39,11 @@ export default async function handler(req, res) {
         $set: {
           fuel: assetData.fuel,
           status: assetData.status,
+          type: assetData.type,
+          location: assetData.location,
+          revenue: assetData.revenue,
+          maintenance: assetData.maintenance,
+          availability: assetData.availability,
           updatedAt: new Date(),
         },
       },
