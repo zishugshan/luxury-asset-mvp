@@ -18,6 +18,11 @@ export default async function handler(req, res) {
   }
 
   let assetData;
+
+  if (data.startsWith("`") && data.endsWith("`")) {
+    data = data.slice(1, -1); // remove backticks
+  }
+
   try {
     assetData = JSON.parse(data);
     console.log("Parsed asset data:", assetData);
